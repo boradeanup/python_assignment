@@ -20,3 +20,7 @@ services:
       - 5000:5000
     environment:
       - DB_HOST=db:5432
+      - USER=myuser
+      - PASS=mypassword
+      - DB_NAME=financial_data
+    tty: true
