@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  db:
+    image: postgres:14.1-alpine
+    restart: always
+    environment:
+      POSTGRES_DB: financial_data
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypassword
+    ports:
+      - 127.0.0.1:15432:5432
+    volumes:
+      - ./data:/var/lib/postgresql/data
+      - ./create_table.sql:/docker-entrypoint-initdb.d/create_table.sql
+
+  app:
+    build: .
+    ports:
+      - 5000:5000
+    environment:
+      - DB_HOST=db:5432
+      - USER=myuser
+      - PASS=mypassword
+      - DB_NAME=financial_data
+    tty: true
