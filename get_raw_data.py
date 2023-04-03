@@ -13,12 +13,13 @@ API_KEY = os.getenv('API_KEY')
 db_user = os.getenv('USER')
 db_pass = os.getenv('PASS')
 db_name = os.getenv('DB_NAME')
-db_host = "0.0.0.0"
-db_port = "5432"
+db_host = os.getenv('DB_HOST')
+# db_host = "0.0.0.0"
+# db_port = "5432"
 
 company_list = ['IBM' , 'AAPL']
 # replace the "demo" apikey below with your own key from https://www.alphavantage.co/support/#api-key
-db_string = 'postgresql://{}:{}@{}:{}/{}'.format(db_user, db_pass, db_host, db_port, db_name)
+db_string = 'postgresql://{}:{}@{}/{}'.format(db_user, db_pass, db_host, db_name)
 db = create_engine(db_string)
 
 def is_within_two_weeks(date_str):
@@ -57,4 +58,16 @@ for company in company_list:
                 "volume": volume
             })
 
-    print(processed_data)
+    for data in processed_data:
+
+        query = "INSERT INTO financial_data (symbol, date, open_price, close_price, volume) VALUES (%s, %s, %s, %s, %s) ON CONFLICT DO NOTHING",
+        (data['symbol'], data['date'], data['open_price'], data['close_price'], data['volume'])
+
+
+        db.execute(query)
+
+    
+
+
+
+db.close()
