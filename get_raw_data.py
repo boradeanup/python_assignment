@@ -3,7 +3,7 @@ import os
 from dotenv import load_dotenv
 import json
 from datetime import datetime, timedelta
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, text
 
 
 load_dotenv('./financial/.env')
@@ -20,7 +20,7 @@ db_host = os.getenv('DB_HOST')
 company_list = ['IBM' , 'AAPL']
 # replace the "demo" apikey below with your own key from https://www.alphavantage.co/support/#api-key
 db_string = 'postgresql://{}:{}@{}/{}'.format(db_user, db_pass, db_host, db_name)
-db = create_engine(db_string)
+db = create_engine(db_string).connect()
 
 def is_within_two_weeks(date_str):
     try:
@@ -60,11 +60,8 @@ for company in company_list:
 
     for data in processed_data:
 
-        query = "INSERT INTO financial_data (symbol, date, open_price, close_price, volume) VALUES (%s, %s, %s, %s, %s) ON CONFLICT DO NOTHING",
-        (data['symbol'], data['date'], data['open_price'], data['close_price'], data['volume'])
-
-
-        db.execute(query)
+        insert_query = text("INSERT INTO financial_data (symbol, date, open_price, close_price, volume) VALUES (:symbol, :date, :open_price, :close_price, :volume) ON CONFLICT DO NOTHING")
+        db.execute(insert_query, symbol=data['symbol'], date=data['date'], open_price=data['open_price'], close_price=data['close_price'], volume=data['volume'])
 
     
 
