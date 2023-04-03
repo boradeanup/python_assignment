@@ -3,16 +3,23 @@ import os
 from dotenv import load_dotenv
 import json
 from datetime import datetime, timedelta
-
+from sqlalchemy import create_engine
 
 
 load_dotenv('./financial/.env')
 
 API_KEY = os.getenv('API_KEY')
 
+db_user = os.getenv('USER')
+db_pass = os.getenv('PASS')
+db_name = os.getenv('DB_NAME')
+db_host = "0.0.0.0"
+db_port = "5432"
+
 company_list = ['IBM' , 'AAPL']
 # replace the "demo" apikey below with your own key from https://www.alphavantage.co/support/#api-key
-
+db_string = 'postgresql://{}:{}@{}:{}/{}'.format(db_user, db_pass, db_host, db_port, db_name)
+db = create_engine(db_string)
 
 def is_within_two_weeks(date_str):
     try:
@@ -50,4 +57,4 @@ for company in company_list:
                 "volume": volume
             })
 
-        print(processed_data)
+    print(processed_data)
