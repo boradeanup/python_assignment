@@ -3,7 +3,7 @@ version: '3'
 services:
   db:
     image: postgres:14.1-alpine
-    restart: always
+    # restart: always
     environment:
       POSTGRES_DB: financial_data
       POSTGRES_USER: myuser
@@ -23,4 +23,4 @@ services:
       - USER=myuser
       - PASS=mypassword
       - DB_NAME=financial_data
-    tty: true
+    # tty: true
