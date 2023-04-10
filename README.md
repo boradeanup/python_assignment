@@ -27,7 +27,9 @@ Note: All parameters are required, and the endpoint performs calculations on the
 
 
 ## Tech Stack
-Flask: a lightweight Python web framework for building RESTful APIs and web applications.
-Flask-SQLAlchemy: an extension for Flask that simplifies the use of SQLAlchemy for database integration.
-Docker: a platform for building, shipping, and running applications in containers that provide isolation and portability.
-Docker Compose: a tool for defining and running multi-container Docker applications, allowing you to run the whole application stack with a single command.
+* Flask: a lightweight Python web framework for building RESTful APIs and web applications.
+* Flask-SQLAlchemy: an extension for Flask that simplifies the use of SQLAlchemy for database integration.
+* Docker: a platform for building, shipping, and running applications in containers that provide isolation and portability.
+* Docker Compose: a tool for defining and running multi-container Docker applications, allowing you to run the whole application stack with a single command.
+* postgres:14.1-alpine: A lightweight Docker image based on Alpine Linux with PostgreSQL 14.1 installed.
+* python:3.9.6-slim-buster: A slim Docker image based on Debian Buster with Python 3.9.6 installed.
