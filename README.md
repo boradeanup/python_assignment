@@ -49,3 +49,10 @@ Note: All parameters are required, and the endpoint performs calculations on the
 ## Handling of sensitive data-
 * The api key is store in a .env file in the financial/ folder. This is good enough for local environment.
 * For production environment, if we are using a cloud hosting service such as google cloud, we could store such a file as an encrypted secret and then mount it to the docker image for the api in the docker compose file.
+
+
+## Future improvements to the codebase-
+* In the get_raw_data script for fetching data, add the option to retain only the data for the latest 2 weeks and delete older data, if the code is planning to be used for a long time.
+* Host the api using a production level server such as gunicorn. Also mount the api source file in the docker compose section for the api and enable hot reload in gunicorn- this way, development would be very easy in the docker environment.
+* Make the get_raw_data file more modular- currently this portion of the code is quite rudimentary. 
+
