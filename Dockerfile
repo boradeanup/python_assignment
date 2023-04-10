@@ -15,5 +15,10 @@ RUN pip install -r requirements.txt
 
 # copy files
 COPY * /app/
+RUN mkdir financial
+COPY financial/* financial/
 
+RUN cd financial/
+
+CMD [ "flask", "run","--host","0.0.0.0","--port","5000"]
 # CMD /bin/bash start
