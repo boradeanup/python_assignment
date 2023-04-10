@@ -53,6 +53,6 @@ Note: All parameters are required, and the endpoint performs calculations on the
 
 ## Future improvements to the codebase-
 * In the get_raw_data script for fetching data, add the option to retain only the data for the latest 2 weeks and delete older data, if the code is planning to be used for a long time.
-* Host the api using a production level server such as gunicorn. Also mount the api source file in the docker compose section for the api and enable hot reload in gunicorn- this way, development would be very easy in the docker environment.
+* Host the api using a production level server such as gunicorn. Also mount the api source file in the docker compose section for the api and enable hot reload in gunicorn using the '--reload' option- this way, the server would restart with latest changes as soon as code changes are saved. I have done this in the past, but did not have time to implement it.
 * Make the get_raw_data file more modular- currently this portion of the code is quite rudimentary. 
 
