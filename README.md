@@ -1,10 +1,10 @@
 README-
 
-** A brief project description
+## A brief project description
 
 This repository fetches some simple stock price data for 2 companies using the free API from AlphaVantage  locally and makes it accessible via a RESTful web API interface.
 
-*** Financial data API- 
+## Financial data API- 
 Inputs:
 * Optional parameters: start_date (YYYY-MM-DD), end_date (YYYY-MM-DD), and symbol (string) which represents the company name.
 * Optional pagination parameters: limit (integer) and page (integer)
@@ -16,7 +16,7 @@ Outputs:
 Note: If no filters are provided, all financial data records will be returned. The default limit for one page is 5 records.
 
 
-*** Statistics API- 
+## Statistics API- 
 
 Inputs:
 * Required parameters: start_date (YYYY-MM-DD), end_date (YYYY-MM-DD), and symbol (string) which represents the company name. Outputs:
@@ -24,3 +24,10 @@ Inputs:
     * data: an object containing the calculated statistic results for the given period, including the average daily open price, average daily closing price, and average daily volume
     * info: an object containing any error information if applicable
 Note: All parameters are required, and the endpoint performs calculations on the data within the specified period of time.
+
+
+## Tech Stack
+Flask: a lightweight Python web framework for building RESTful APIs and web applications.
+Flask-SQLAlchemy: an extension for Flask that simplifies the use of SQLAlchemy for database integration.
+Docker: a platform for building, shipping, and running applications in containers that provide isolation and portability.
+Docker Compose: a tool for defining and running multi-container Docker applications, allowing you to run the whole application stack with a single command.
