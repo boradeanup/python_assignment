@@ -44,3 +44,8 @@ Note: All parameters are required, and the endpoint performs calculations on the
 ## To first populate the database-
 * Open a terminal into the docker container for the python application (using docker desktop or CLI)
 * Run the python script get_raw_data.py
+
+
+## Handling of sensitive data-
+* The api key is store in a .env file in the financial/ folder. This is good enough for local environment.
+* For production environment, if we are using a cloud hosting service such as google cloud, we could store such a file as an encrypted secret and then mount it to the docker image for the api in the docker compose file.
