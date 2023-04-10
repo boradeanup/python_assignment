@@ -41,3 +41,6 @@ Note: All parameters are required, and the endpoint performs calculations on the
 2. Run `docker-compose build` to build the containers.
 3. Run `docker-compose up` to start the containers and run the application.
 
+## To first populate the database-
+* Open a terminal into the docker container for the python application (using docker desktop or CLI)
+* Run the python script get_raw_data.py
