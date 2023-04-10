@@ -33,3 +33,11 @@ Note: All parameters are required, and the endpoint performs calculations on the
 * Docker Compose: a tool for defining and running multi-container Docker applications, allowing you to run the whole application stack with a single command.
 * postgres:14.1-alpine: A lightweight Docker image based on Alpine Linux with PostgreSQL 14.1 installed.
 * python:3.9.6-slim-buster: A slim Docker image based on Debian Buster with Python 3.9.6 installed.
+
+
+## How to run your code in local environment
+
+1. Make sure you have Docker and Docker Compose installed in your local environment.
+2. Run `docker-compose build` to build the containers.
+3. Run `docker-compose up` to start the containers and run the application.
+
