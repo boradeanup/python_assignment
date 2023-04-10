@@ -18,7 +18,7 @@ class InvalidQueryParameter(Exception):
 # Custom error handler for invalid query parameters
 @app.errorhandler(InvalidQueryParameter)
 def handle_invalid_query_parameter(error):
-    response = jsonify({"data": [], "pagination": {}, 'info': str(error)})
+    response = jsonify({"data": [], "pagination": {}, 'info': {'error':str(error)}})
     response.status_code = 400
     return response
 
@@ -45,7 +45,7 @@ def get():
     page = request.args.get('page', 1)
 
     # Check data types of query parameters if they are not None
-    if symbol and not is_company_symbol(symbol):
+    if symbol and len(symbol)>0 and not is_company_symbol(symbol):
         raise InvalidQueryParameter('symbol should be one of AAPL, IBM')
     if start_date and is_date_error(start_date):
         raise InvalidQueryParameter('date must be a of format YY-mm-dd')
@@ -58,14 +58,56 @@ def get():
 
 
 
-    financial_data_list = FinancialData.query.all()
-    json_list = [{"symbol": row.symbol,
-                        "date": row.date.strftime("%Y-%m-%d"),
-                        "open_price": float(row.open_price),
-                        "close_price": float(row.close_price),
-                        "volume": int(row.volume)}
-                for row in financial_data_list]
-    return {"data": json_list, pagination: {}, "info": {}}
+    query = FinancialData.query
+    if(start_date > end_date):
+        raise InvalidQueryParameter("Please specify start date earlier than end date.")
+    else:
+        query = query.filter(FinancialData.date >= start_date, FinancialData.date <= end_date)
+        query = query.order_by(FinancialData.date.asc())
+# if symbol is legit, use to filter otherwise don't
+    if(is_company_symbol(symbol)):
+        query = query.filter_by(symbol=symbol)
+
+# Calculate pagination properties
+    count = query.count()
+    pages = int(int(count)/int(limit)) + 1  
+
+
+    error=''
+
+    if(int(page) > pages):
+        error = 'Page number exceeds total number of pages'
+
+
+    query = query.paginate(page = int(page), per_page = int(limit), error_out=False)
+    results = query.items
+
+    # Construct response JSON object
+    data = []
+    for result in results:
+        data.append({
+            'symbol': result.symbol,
+            'date': result.date.isoformat(),
+            'open_price': float(result.open_price),
+            'close_price': float(result.close_price),
+            'volume': int(result.volume)
+        })
+
+    pagination = {
+        'count': count,
+        'page': page,
+        'limit': limit,
+        'pages': pages
+    }
+
+    response = {
+        'data': data,
+        'pagination': pagination,
+        'info': {'error': error}
+    }
+
+
+    return jsonify(response)
 
 
 
